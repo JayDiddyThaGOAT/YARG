@@ -808,6 +808,7 @@ GameObject:
   - component: {fileID: 4030813025219603265}
   - component: {fileID: 8056469617016179532}
   - component: {fileID: 4030813025219603277}
+  - component: {fileID: 6060605754794283623}
   m_Layer: 5
   m_Name: MusicLibraryMenu
   m_TagString: Untagged
@@ -847,9 +848,9 @@ Canvas:
   m_GameObject: {fileID: 4030813025219603270}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -935,6 +936,18 @@ MonoBehaviour:
   _sidebar: {fileID: 5958352451011471034}
   _noPlayerWarning: {fileID: 3731235360306283306}
   _popupMenu: {fileID: 6261760643625431320}
+--- !u!114 &6060605754794283623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4030813025219603270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c178663eab0a65947b5b53f54bc4f903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4030813025972567529
 GameObject:
   m_ObjectHideFlags: 0

@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1731608351740115690}
   - component: {fileID: 4004993937793846201}
   - component: {fileID: 2297200881685797724}
+  - component: {fileID: 3357956086107818344}
   m_Layer: 5
   m_Name: HistoryMenu
   m_TagString: Untagged
@@ -217,9 +218,9 @@ Canvas:
   m_GameObject: {fileID: 1731608351740115684}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -303,6 +304,18 @@ MonoBehaviour:
   _exportReplayButton: {fileID: 8577329528064569814}
   _importReplayButton: {fileID: 7535555724622063350}
   _headerTabs: {fileID: 4155919010694207238}
+--- !u!114 &3357956086107818344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731608351740115684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c178663eab0a65947b5b53f54bc4f903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3868076950096473284
 GameObject:
   m_ObjectHideFlags: 0

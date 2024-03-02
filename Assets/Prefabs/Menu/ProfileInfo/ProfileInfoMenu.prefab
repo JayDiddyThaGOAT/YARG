@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 1731608351740115690}
   - component: {fileID: 4004993937793846201}
   - component: {fileID: 403858369899366164}
+  - component: {fileID: 7304794029581158755}
   m_Layer: 5
   m_Name: ProfileInfoMenu
   m_TagString: Untagged
@@ -559,9 +560,9 @@ Canvas:
   m_GameObject: {fileID: 1731608351740115684}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -640,6 +641,18 @@ MonoBehaviour:
   _tabs: {fileID: 2030159682772340971}
   _overviewTab: {fileID: 5093543328377875489}
   _editBindsTab: {fileID: 851022527203337107}
+--- !u!114 &7304794029581158755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731608351740115684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c178663eab0a65947b5b53f54bc4f903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2721801570844496272
 GameObject:
   m_ObjectHideFlags: 0

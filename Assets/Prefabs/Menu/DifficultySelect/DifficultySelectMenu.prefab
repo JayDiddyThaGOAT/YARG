@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1731608351740115690}
   - component: {fileID: 4004993937793846201}
   - component: {fileID: 7249260118945706693}
+  - component: {fileID: 8472735416448449148}
   m_Layer: 5
   m_Name: DifficultySelectMenu
   m_TagString: Untagged
@@ -190,9 +191,9 @@ Canvas:
   m_GameObject: {fileID: 1731608351740115684}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -282,6 +283,18 @@ MonoBehaviour:
     type: 3}
   _modifierItemPrefab: {fileID: 3419815060514877507, guid: 6c928df38839ed24eaa659f76c62da6b,
     type: 3}
+--- !u!114 &8472735416448449148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731608351740115684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c178663eab0a65947b5b53f54bc4f903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2177612344681018170
 GameObject:
   m_ObjectHideFlags: 0
