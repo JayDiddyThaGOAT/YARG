@@ -10,7 +10,7 @@ using YARG.Player;
 
 namespace YARG.Helpers.MultiDisplay
 {
-    public struct Display
+    public struct YargDisplay
     {
         public GameObject DisplayObject;
         public GameObject TrackViewObject;
@@ -31,7 +31,7 @@ namespace YARG.Helpers.MultiDisplay
 
         public int DisplayCount { get; private set; }
 
-        private Dictionary<int, Display> _activeDisplays;
+        private Dictionary<int, YargDisplay> _activeDisplays;
 
         private GameManager _gameManager;
 
@@ -42,10 +42,10 @@ namespace YARG.Helpers.MultiDisplay
 #else
             DisplayCount = Display.displays.Length;
 #endif
-            _activeDisplays = new Dictionary<int, Display>();
+            _activeDisplays = new Dictionary<int, YargDisplay>();
             for (int i = 2; i <= DisplayCount; i++)
             {
-                _activeDisplays.Add(i, new Display());
+                _activeDisplays.Add(i, new YargDisplay());
             }
 
             _multiDisplayCanvas = Addressables
@@ -151,7 +151,7 @@ namespace YARG.Helpers.MultiDisplay
                 players = _gameManager.YargPlayers.ToList();
             }
 
-            foreach (var displayNumber in new Dictionary<int, Display>(_activeDisplays).Keys)
+            foreach (var displayNumber in new Dictionary<int, YargDisplay>(_activeDisplays).Keys)
             {
                 if (players.Any(player => player.DisplayNumber == displayNumber))
                 {
