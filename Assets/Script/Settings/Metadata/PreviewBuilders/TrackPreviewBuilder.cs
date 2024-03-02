@@ -59,11 +59,6 @@ namespace YARG.Settings.Metadata
             var previewTexture = go.GetComponentInChildren<RawImage>();
             previewTexture.texture = CameraPreviewTexture.PreviewTexture;
             previewTexture.color = Color.white;
-
-            // Size raw image
-            var rect = previewTexture.rectTransform.ToViewportSpaceCentered(v: false, scale: 0.9f);
-            rect.y = 0f;
-            previewTexture.uvRect = rect;
         }
     }
 }
