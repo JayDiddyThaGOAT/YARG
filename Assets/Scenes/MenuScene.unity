@@ -2047,6 +2047,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuBackground
       objectReference: {fileID: 0}
+    - target: {fileID: 4748893068835228430, guid: c59fc90e5321ae644b1baecfad526036,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4748893068835228431, guid: c59fc90e5321ae644b1baecfad526036,
         type: 3}
       propertyPath: m_RootOrder
