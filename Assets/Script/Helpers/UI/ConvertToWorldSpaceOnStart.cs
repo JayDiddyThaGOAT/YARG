@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace YARG.MultiDisplay
+namespace YARG.Helpers.UI
 {
 
     public class ConvertToWorldSpaceOnStart : MonoBehaviour
