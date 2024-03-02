@@ -70,10 +70,10 @@ MonoBehaviour:
   m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
-    x: 0
+    x: 0.2511574
     y: 0
-    width: 1
-    height: 1
+    width: 0.4976852
+    height: 0.73148155
 --- !u!114 &207666053534402363
 MonoBehaviour:
   m_ObjectHideFlags: 0
