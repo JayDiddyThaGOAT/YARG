@@ -21,6 +21,12 @@ namespace YARG.Player
         /// </summary>
         public bool SittingOut;
 
+        /// <summary>
+        /// The index specifying which display the player's track is on. This is not needed in <see cref="Profile"/> as
+        /// players that are sitting out are not included in replays.
+        /// </summary>
+        public int DisplayNumber = 1;
+
         public bool InputsEnabled { get; private set; }
         public ProfileBindings Bindings { get; private set; }
 
