@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using YARG.Core;
 using YARG.Core.Game;
 using YARG.Helpers;
+using YARG.Helpers.MultiDisplay;
 using YARG.Menu.Data;
 using YARG.Menu.Persistent;
 using YARG.Menu.ProfileInfo;
@@ -62,6 +63,8 @@ namespace YARG.Menu.ProfileList
         private TMP_Dropdown _colorProfileDropdown;
         [SerializeField]
         private TMP_Dropdown _cameraPresetDropdown;
+        [SerializeField]
+        private TMP_Dropdown _displayNumberDropdown;
 
         [Space]
         [SerializeField]
@@ -88,6 +91,7 @@ namespace YARG.Menu.ProfileList
         private List<Guid> _colorProfilesByIndex;
         private List<Guid> _cameraPresetsByIndex;
         private List<Guid> _themesByIndex;
+        private List<int> _displaysByIndex;
 
         private void Awake()
         {
@@ -119,6 +123,8 @@ namespace YARG.Menu.ProfileList
             _cameraPresetsByIndex =
                 CustomContentManager.CameraSettings.AddOptionsToDropdown(_cameraPresetDropdown)
                     .Select(i => i.Id).ToList();
+
+            _displaysByIndex = MultiDisplayManager.Instance.AddOptionsToDropdown(_displayNumberDropdown);
         }
 
         public void UpdateSidebar(YargProfile profile, ProfileView profileView)
@@ -151,6 +157,13 @@ namespace YARG.Menu.ProfileList
                 _colorProfilesByIndex.IndexOf(profile.ColorProfile));
             _cameraPresetDropdown.SetValueWithoutNotify(
                 _cameraPresetsByIndex.IndexOf(profile.CameraPreset));
+
+            // Update display dropdown
+            if (_displayNumberDropdown.interactable)
+            {
+                var player = PlayerContainer.GetPlayerFromProfile(_profile);
+                _displayNumberDropdown.SetValueWithoutNotify(_displaysByIndex.IndexOf(player.DisplayNumber));
+            }
 
             // Show the proper name container (hide the editing version)
             _nameContainer.SetActive(true);
@@ -326,6 +339,13 @@ namespace YARG.Menu.ProfileList
         public void ChangeCameraPreset()
         {
             _profile.CameraPreset = _cameraPresetsByIndex[_cameraPresetDropdown.value];
+        }
+
+        public void ChangeDisplayNumber()
+        {
+            var player = PlayerContainer.GetPlayerFromProfile(_profile);
+            player.DisplayNumber = _displaysByIndex[_displayNumberDropdown.value];
+            MultiDisplayManager.Instance.ResetTargetDisplays();
         }
     }
 }

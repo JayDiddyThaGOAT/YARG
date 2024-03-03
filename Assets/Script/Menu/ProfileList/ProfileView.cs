@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using YARG.Core.Game;
+using YARG.Helpers.MultiDisplay;
 using YARG.Menu.Navigation;
 using YARG.Menu.Persistent;
 using YARG.Player;
@@ -231,6 +232,7 @@ namespace YARG.Menu.ProfileList
                 }
             }
 
+            MultiDisplayManager.Instance.ConnectPlayerToDisplay(player);
             Reinitialize();
         }
 
@@ -246,6 +248,7 @@ namespace YARG.Menu.ProfileList
                 return;
             }
 
+            MultiDisplayManager.Instance.DisconnectPlayerFromDisplay(player);
             PlayerContainer.DisposePlayer(player);
             Reinitialize();
         }
