@@ -59,8 +59,6 @@ namespace YARG.Helpers.MultiDisplay
                 list.Add(i);
             }
 
-            //Selecting display number dropdown is available for players with more than 1 monitor
-            dropdown.interactable = DisplayCount > 1;
             return list;
         }
 

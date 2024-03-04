@@ -158,12 +158,16 @@ namespace YARG.Menu.ProfileList
             _cameraPresetDropdown.SetValueWithoutNotify(
                 _cameraPresetsByIndex.IndexOf(profile.CameraPreset));
 
-            // Update display dropdown
-            if (_displayNumberDropdown.interactable)
+            // Update display dropdown (lock to primary display if single monitor or single profile setup)
+            _displayNumberDropdown.interactable = MultiDisplayManager.Instance.DisplayCount > 1;
+            _displayNumberDropdown.interactable &= PlayerContainer.Players.Count > 1;
+
+            var player = PlayerContainer.GetPlayerFromProfile(_profile);
+            if (!_displayNumberDropdown.interactable)
             {
-                var player = PlayerContainer.GetPlayerFromProfile(_profile);
-                _displayNumberDropdown.SetValueWithoutNotify(_displaysByIndex.IndexOf(player.DisplayNumber));
+                player.DisplayNumber = 1;
             }
+            _displayNumberDropdown.SetValueWithoutNotify(_displaysByIndex.IndexOf(player.DisplayNumber));
 
             // Show the proper name container (hide the editing version)
             _nameContainer.SetActive(true);
