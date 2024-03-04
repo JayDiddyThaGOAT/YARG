@@ -93,7 +93,14 @@ namespace YARG.Gameplay
 
                     var bbManager = bgInstance.GetComponent<BundleBackgroundManager>();
                     bbManager.Bundle = bundle;
-                    bbManager.GetComponentInChildren<Camera>().targetTexture = BackgroundTexture;
+
+                    // Hack for venues with multiple cameras to just send it's output to BackgroundTexture
+                    // so no camera will go over canvas
+                    foreach (var camera in bbManager.GetComponentsInChildren<Camera>())
+                    {
+                        camera.targetTexture = BackgroundTexture;
+                    }
+
                     _backgroundImage.gameObject.SetActive(true);
                     _backgroundImage.texture = BackgroundTexture;
                     break;
