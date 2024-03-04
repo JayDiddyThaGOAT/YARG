@@ -8,13 +8,22 @@ using YARG.Player;
 
 namespace YARG.Helpers.MultiDisplay
 {
+    public struct Display
+    {
+        public GameObject DisplayObject;
+        public Camera Camera;
+    }
+
     public class MultiDisplayManager : MonoSingleton<MultiDisplayManager>
     {
         private static GameObject _multiDisplayCanvas;
 
+        [SerializeField]
+        private Camera _mainCamera;
+
         public int DisplayCount { get; private set; }
 
-        private Dictionary<int, GameObject> _activeDisplays;
+        private Dictionary<int, Display> _activeDisplays;
 
         protected override void SingletonAwake()
         {
@@ -23,10 +32,10 @@ namespace YARG.Helpers.MultiDisplay
 #else
             DisplayCount = Display.displays.Length;
 #endif
-            _activeDisplays = new Dictionary<int, GameObject>();
+            _activeDisplays = new Dictionary<int, Display>();
             for (int i = 2; i <= DisplayCount; i++)
             {
-                _activeDisplays.Add(i, null);
+                _activeDisplays.Add(i, new Display());
             }
 
             _multiDisplayCanvas = Addressables
@@ -82,7 +91,7 @@ namespace YARG.Helpers.MultiDisplay
                 players = gameManager.YargPlayers.ToList();
             }
 
-            foreach (var displayNumber in new Dictionary<int, GameObject>(_activeDisplays).Keys)
+            foreach (var displayNumber in new Dictionary<int, Display>(_activeDisplays).Keys)
             {
                 if (players.Any(player => player.DisplayNumber == displayNumber))
                 {
@@ -102,27 +111,35 @@ namespace YARG.Helpers.MultiDisplay
                 return;
             }
 
-            if (_activeDisplays[displayNumber] == null)
+            var activeDisplay = _activeDisplays[displayNumber];
+            if (activeDisplay.DisplayObject == null)
             {
-                _activeDisplays[displayNumber] = Instantiate(_multiDisplayCanvas, transform.root);
-                _activeDisplays[displayNumber].name += $" {displayNumber}";
-                var canvas = _activeDisplays[displayNumber].GetComponent<Canvas>();
+                activeDisplay.DisplayObject = Instantiate(_multiDisplayCanvas, transform.root);
+                activeDisplay.DisplayObject.name += $" {displayNumber}";
+                var canvas = activeDisplay.DisplayObject.GetComponent<Canvas>();
                 canvas.targetDisplay = displayNumber - 1;
+
+                activeDisplay.Camera = Instantiate(_mainCamera, _mainCamera.transform);
+                activeDisplay.Camera.targetDisplay = displayNumber - 1;
+
+                _activeDisplays[displayNumber] = activeDisplay;
             }
             else
             {
-                _activeDisplays[displayNumber].SetActive(true);
+                activeDisplay.DisplayObject.SetActive(true);
+                activeDisplay.Camera.gameObject.SetActive(true);
             }
         }
 
         private void DisconnectDisplayTo(int displayNumber)
         {
-            if (!_activeDisplays.ContainsKey(displayNumber) || _activeDisplays[displayNumber] == null)
+            if (!_activeDisplays.ContainsKey(displayNumber) || _activeDisplays[displayNumber].DisplayObject == null)
             {
                 return;
             }
 
-            _activeDisplays[displayNumber].SetActive(false);
+            _activeDisplays[displayNumber].DisplayObject.SetActive(false);
+            _activeDisplays[displayNumber].Camera.gameObject.SetActive(false);
         }
 
     }
