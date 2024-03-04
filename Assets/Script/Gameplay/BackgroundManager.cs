@@ -14,7 +14,6 @@ namespace YARG.Gameplay
 {
     public class BackgroundManager : GameplayBehaviour, IDisposable
     {
-        public static RenderTexture BackgroundTexture { get; private set; }
 
         private string VIDEO_PATH;
         [SerializeField]
@@ -35,6 +34,7 @@ namespace YARG.Gameplay
         // End time cannot be negative; a negative value means it is not set.
         private double _videoEndTime;
 
+        private RenderTexture _backgroundTexture;
         private RenderTextureDescriptor _backgroundDescriptor;
 
         // "The Unity message 'Start' has an incorrect signature."
@@ -87,7 +87,7 @@ namespace YARG.Gameplay
                         RenderTextureFormat.ARGBHalf
                     );
                     _backgroundDescriptor.mipCount = 0;
-                    BackgroundTexture = new RenderTexture(_backgroundDescriptor);
+                    _backgroundTexture = new RenderTexture(_backgroundDescriptor);
 
                     var bgInstance = Instantiate(bg);
 
@@ -98,11 +98,11 @@ namespace YARG.Gameplay
                     // so no camera will go over canvas
                     foreach (var camera in bbManager.GetComponentsInChildren<Camera>())
                     {
-                        camera.targetTexture = BackgroundTexture;
+                        camera.targetTexture = _backgroundTexture;
                     }
 
                     _backgroundImage.gameObject.SetActive(true);
-                    _backgroundImage.texture = BackgroundTexture;
+                    _backgroundImage.texture = _backgroundTexture;
                     break;
                 case BackgroundType.Video:
                     switch (stream)
@@ -132,17 +132,17 @@ namespace YARG.Gameplay
                         RenderTextureFormat.ARGBHalf
                     );
                     _backgroundDescriptor.mipCount = 0;
-                    BackgroundTexture = new RenderTexture(_backgroundDescriptor);
+                    _backgroundTexture = new RenderTexture(_backgroundDescriptor);
 
                     _videoPlayer.enabled = true;
-                    _videoPlayer.targetTexture = BackgroundTexture;
+                    _videoPlayer.targetTexture = _backgroundTexture;
                     _videoPlayer.prepareCompleted += OnVideoPrepared;
                     _videoPlayer.seekCompleted += OnVideoSeeked;
                     _videoPlayer.Prepare();
                     enabled = true;
 
                     _backgroundImage.gameObject.SetActive(true);
-                    _backgroundImage.texture = BackgroundTexture;
+                    _backgroundImage.texture = _backgroundTexture;
                     break;
                 case BackgroundType.Image:
                     var texture = new Texture2D(2, 2);
@@ -323,6 +323,12 @@ namespace YARG.Gameplay
             {
                 File.Delete(VIDEO_PATH);
                 VIDEO_PATH = null;
+            }
+
+            if (_backgroundTexture != null)
+            {
+                _backgroundTexture.Release();
+                _backgroundTexture = null;
             }
         }
 
