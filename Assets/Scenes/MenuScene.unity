@@ -711,8 +711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dd24b771b17ef478c8b7d2256445c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _multiDisplayPrefab: {fileID: 1057184451494777618, guid: 8660f13398cb40a49a5d48cc643d6dcf,
-    type: 3}
 --- !u!1001 &1731608352421187187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2057,6 +2055,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4748893067900258300, guid: c59fc90e5321ae644b1baecfad526036,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4748893068835228428, guid: c59fc90e5321ae644b1baecfad526036,
         type: 3}
       propertyPath: m_Name
