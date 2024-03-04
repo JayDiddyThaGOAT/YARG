@@ -14,6 +14,8 @@ namespace YARG.Gameplay
 {
     public class BackgroundManager : GameplayBehaviour, IDisposable
     {
+        public static RenderTexture BackgroundTexture { get; private set; }
+
         private string VIDEO_PATH;
         [SerializeField]
         private VideoPlayer _videoPlayer;
@@ -33,6 +35,8 @@ namespace YARG.Gameplay
         // End time cannot be negative; a negative value means it is not set.
         private double _videoEndTime;
 
+        private RenderTextureDescriptor _backgroundDescriptor;
+
         // "The Unity message 'Start' has an incorrect signature."
         [SuppressMessage("Type Safety", "UNT0006", Justification = "UniTaskVoid is a compatible return type.")]
         private async UniTaskVoid Start()
@@ -50,6 +54,7 @@ namespace YARG.Gameplay
 
             var type = _venueInfo.Type;
             using var stream = _venueInfo.Stream;
+
 
             switch (type)
             {
@@ -76,9 +81,21 @@ namespace YARG.Gameplay
 					}
 #endif
 
+                    // Create render texture
+                    _backgroundDescriptor = new RenderTextureDescriptor(
+                        Screen.width, Screen.height,
+                        RenderTextureFormat.ARGBHalf
+                    );
+                    _backgroundDescriptor.mipCount = 0;
+                    BackgroundTexture = new RenderTexture(_backgroundDescriptor);
+
                     var bgInstance = Instantiate(bg);
 
-                    bgInstance.GetComponent<BundleBackgroundManager>().Bundle = bundle;
+                    var bbManager = bgInstance.GetComponent<BundleBackgroundManager>();
+                    bbManager.Bundle = bundle;
+                    bbManager.GetComponentInChildren<Camera>().targetTexture = BackgroundTexture;
+                    _backgroundImage.gameObject.SetActive(true);
+                    _backgroundImage.texture = BackgroundTexture;
                     break;
                 case BackgroundType.Video:
                     switch (stream)
@@ -102,11 +119,23 @@ namespace YARG.Gameplay
                         }
                     }
 
+                    // Create render texture
+                    _backgroundDescriptor = new RenderTextureDescriptor(
+                        Screen.width, Screen.height,
+                        RenderTextureFormat.ARGBHalf
+                    );
+                    _backgroundDescriptor.mipCount = 0;
+                    BackgroundTexture = new RenderTexture(_backgroundDescriptor);
+
                     _videoPlayer.enabled = true;
+                    _videoPlayer.targetTexture = BackgroundTexture;
                     _videoPlayer.prepareCompleted += OnVideoPrepared;
                     _videoPlayer.seekCompleted += OnVideoSeeked;
                     _videoPlayer.Prepare();
                     enabled = true;
+
+                    _backgroundImage.gameObject.SetActive(true);
+                    _backgroundImage.texture = BackgroundTexture;
                     break;
                 case BackgroundType.Image:
                     var texture = new Texture2D(2, 2);
