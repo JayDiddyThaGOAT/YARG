@@ -1316,6 +1316,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305557730}
   m_CullTransparentMesh: 1
+--- !u!1 &1381130058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381130060}
+  - component: {fileID: 1381130059}
+  m_Layer: 0
+  m_Name: Score Screen Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1381130059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381130058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30dd24b771b17ef478c8b7d2256445c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1381130060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381130058}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1731608351534815124}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1490960382 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6232041351873830570, guid: 81863a63e0d96cf459c263ee0ea6f98e,
@@ -1642,7 +1687,7 @@ RectTransform:
   m_Children:
   - {fileID: 847517302}
   - {fileID: 1025282833}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1381130060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1665,6 +1710,7 @@ GameObject:
   - component: {fileID: 1731608351534815136}
   - component: {fileID: 1731608351534815137}
   - component: {fileID: 1731608351534815138}
+  - component: {fileID: 1731608351534815139}
   m_Layer: 5
   m_Name: Score Screen
   m_TagString: Untagged
@@ -1719,5 +1765,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c178663eab0a65947b5b53f54bc4f903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1731608351534815139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731608351534815135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b4d9116f6b8ae489ba5d702676a7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
