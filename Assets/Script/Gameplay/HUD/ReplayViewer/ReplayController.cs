@@ -54,7 +54,7 @@ namespace YARG.Gameplay.HUD
 
             // Get the hidden position based on the container, and then move to that position
             _hudHiddenY = -_container.sizeDelta.y;
-            _container.position = _container.position.WithY(_hudHiddenY);
+            _container.DOAnchorPosY(_hudHiddenY, _hudAnimationTime, true);
 
             // Listen for menu inputs
             Navigator.Instance.NavigationEvent += OnNavigationEvent;
@@ -99,7 +99,7 @@ namespace YARG.Gameplay.HUD
             {
                 // Hide hud (make sure to use unscaled time)
                 _container
-                    .DOMoveY(_hudHiddenY, _hudAnimationTime)
+                    .DOAnchorPosY(_hudHiddenY, _hudAnimationTime)
                     .SetEase(Ease.OutQuint)
                     .SetUpdate(true);
 
@@ -109,7 +109,7 @@ namespace YARG.Gameplay.HUD
             {
                 // Show hud (make sure to use unscaled time)
                 _container
-                    .DOMoveY(0f, _hudAnimationTime)
+                    .DOAnchorPosY(0f, _hudAnimationTime)
                     .SetEase(Ease.OutQuint)
                     .SetUpdate(true);
 
