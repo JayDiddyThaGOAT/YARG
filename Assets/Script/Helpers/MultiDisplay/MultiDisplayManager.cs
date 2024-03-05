@@ -114,11 +114,12 @@ namespace YARG.Helpers.MultiDisplay
             {
                 activeDisplay.DisplayObject = Instantiate(_multiDisplayCanvas, transform.root);
                 activeDisplay.DisplayObject.name += $" {displayNumber}";
-                var canvas = activeDisplay.DisplayObject.GetComponent<Canvas>();
-                canvas.targetDisplay = displayNumber - 1;
 
                 activeDisplay.Camera = Instantiate(_mainCamera, _mainCamera.transform);
                 activeDisplay.Camera.targetDisplay = displayNumber - 1;
+
+                var canvas = activeDisplay.DisplayObject.GetComponent<Canvas>();
+                canvas.worldCamera = activeDisplay.Camera;
 
                 _activeDisplays[displayNumber] = activeDisplay;
             }
