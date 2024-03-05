@@ -9,6 +9,7 @@ using YARG.Core.Audio;
 using YARG.Core.Chart;
 using YARG.Core.Replays;
 using YARG.Gameplay.Player;
+using YARG.Helpers.MultiDisplay;
 using YARG.Menu.Navigation;
 using YARG.Menu.Persistent;
 using YARG.Playback;
@@ -255,12 +256,12 @@ namespace YARG.Gameplay
                 {
                     Chart = preset.GenerateFogEvents(Chart);
                 }
-                
+
                 if (Chart.VenueTrack.Lighting.Count == 0)
                 {
                     Chart = preset.GenerateLightingEvents(Chart);
                 }
-                
+
                 // TODO: add when characters and camera events are present in game
                 // if (Chart.VenueTrack.Camera.Count == 0)
                 // {
@@ -330,6 +331,9 @@ namespace YARG.Gameplay
                     player.SetPresetsFromProfile();
                 }
 
+                var trackViewManager = MultiDisplayManager.Instance.GetTrackViewManager(player.DisplayNumber);
+                var lyricBar = MultiDisplayManager.Instance.GetLyricBar(player.DisplayNumber);
+
                 if (player.Profile.GameMode != GameMode.Vocals)
                 {
                     var prefab = player.Profile.GameMode switch
@@ -351,7 +355,7 @@ namespace YARG.Gameplay
 
                     // Setup player
                     var trackPlayer = playerObject.GetComponent<TrackPlayer>();
-                    var trackView = _trackViewManager.CreateTrackView(trackPlayer, player);
+                    var trackView = trackViewManager.CreateTrackView(trackPlayer, player);
                     var currentHighScore = ScoreContainer.GetHighScoreByInstrument(Song.Hash, player.Profile.CurrentInstrument)?.Score;
                     trackPlayer.Initialize(index, player, Chart, trackView, currentHighScore);
                     _players.Add(trackPlayer);
@@ -362,7 +366,7 @@ namespace YARG.Gameplay
                     if (!vocalTrackInitialized)
                     {
                         VocalTrack.gameObject.SetActive(true);
-                        _trackViewManager.CreateVocalTrackView();
+                        trackViewManager.CreateVocalTrackView();
 
                         // Since all players have to select the same vocals
                         // type (solo/harmony) this works no problem.
@@ -371,13 +375,13 @@ namespace YARG.Gameplay
                             : Chart.Harmony;
                         VocalTrack.Initialize(chart, player);
 
-                        _lyricBar.SetActive(false);
+                        lyricBar.SetActive(false);
                         vocalTrackInitialized = true;
                     }
 
                     // Create the player on the vocal track
                     var vocalsPlayer = VocalTrack.CreatePlayer();
-                    var playerHud = _trackViewManager.CreateVocalsPlayerHUD();
+                    var playerHud = trackViewManager.CreateVocalsPlayerHUD();
                     vocalsPlayer.Initialize(index, player, Chart, playerHud);
                     _players.Add(vocalsPlayer);
                 }
@@ -396,9 +400,6 @@ namespace YARG.Gameplay
                     });
                 }
             }
-
-            // Make sure to set up all of the HUD positions
-            _trackViewManager.SetAllHUDPositions();
         }
     }
 }

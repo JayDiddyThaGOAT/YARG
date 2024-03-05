@@ -37,14 +37,9 @@ namespace YARG.Gameplay
 
         [Header("References")]
         [SerializeField]
-        private TrackViewManager _trackViewManager;
-        [SerializeField]
         private ReplayController _replayController;
         [SerializeField]
         private PauseMenuManager _pauseMenu;
-
-        [SerializeField]
-        private GameObject _lyricBar;
 
         [field: SerializeField]
         public VocalTrack VocalTrack { get; private set; }

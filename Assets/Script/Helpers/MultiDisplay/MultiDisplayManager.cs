@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using YARG.Gameplay;
+using YARG.Gameplay.HUD;
 using YARG.Player;
 
 namespace YARG.Helpers.MultiDisplay
@@ -11,12 +12,14 @@ namespace YARG.Helpers.MultiDisplay
     public struct Display
     {
         public GameObject DisplayObject;
+        public GameObject TrackViewObject;
         public Camera Camera;
     }
 
     public class MultiDisplayManager : MonoSingleton<MultiDisplayManager>
     {
         private static GameObject _multiDisplayCanvas;
+        private static GameObject _trackViewCanvas;
 
         [SerializeField]
         private Camera _mainCamera;
@@ -24,6 +27,8 @@ namespace YARG.Helpers.MultiDisplay
         public int DisplayCount { get; private set; }
 
         private Dictionary<int, Display> _activeDisplays;
+
+        private GameManager _gameManager;
 
         protected override void SingletonAwake()
         {
@@ -40,6 +45,10 @@ namespace YARG.Helpers.MultiDisplay
 
             _multiDisplayCanvas = Addressables
                 .LoadAssetAsync<GameObject>("MultiDisplayCanvas")
+                .WaitForCompletion();
+
+            _trackViewCanvas = Addressables
+                .LoadAssetAsync<GameObject>("TrackViewCanvas")
                 .WaitForCompletion();
         }
 
@@ -62,6 +71,39 @@ namespace YARG.Helpers.MultiDisplay
             return list;
         }
 
+        public TrackViewManager GetTrackViewManager(int displayNumber)
+        {
+            TrackViewManager trackViewManager;
+            if (!_activeDisplays.ContainsKey(displayNumber))
+            {
+                trackViewManager = GetComponentInChildren<TrackViewManager>(true);
+            }
+            else
+            {
+                trackViewManager = _activeDisplays[displayNumber].TrackViewObject.GetComponentInChildren<TrackViewManager>(true);
+            }
+
+            // Make sure to set up all of the HUD positions
+            trackViewManager.SetAllHUDPositions();
+
+            return trackViewManager;
+        }
+
+        public GameObject GetLyricBar(int displayNumber)
+        {
+            LyricBar lyricBar;
+            if (!_activeDisplays.ContainsKey(displayNumber))
+            {
+                lyricBar = GetComponentInChildren<LyricBar>(true);
+            }
+            else
+            {
+                lyricBar = _activeDisplays[displayNumber].TrackViewObject.GetComponentInChildren<LyricBar>(true);
+            }
+
+            return lyricBar.gameObject;
+        }
+
         public void ConnectPlayerToDisplay(YargPlayer player)
         {
 #if !UNITY_EDITOR
@@ -79,14 +121,14 @@ namespace YARG.Helpers.MultiDisplay
         {
             List<YargPlayer> players;
 
-            var gameManager = FindObjectOfType<GameManager>();
-            if (gameManager == null)
+           _gameManager = FindObjectOfType<GameManager>();
+            if (_gameManager == null)
             {
                 players = PlayerContainer.Players.ToList();
             }
             else
             {
-                players = gameManager.YargPlayers.ToList();
+                players = _gameManager.YargPlayers.ToList();
             }
 
             foreach (var displayNumber in new Dictionary<int, Display>(_activeDisplays).Keys)
@@ -118,8 +160,15 @@ namespace YARG.Helpers.MultiDisplay
                 activeDisplay.Camera = Instantiate(_mainCamera, _mainCamera.transform);
                 activeDisplay.Camera.targetDisplay = displayNumber - 1;
 
-                var canvas = activeDisplay.DisplayObject.GetComponent<Canvas>();
-                canvas.worldCamera = activeDisplay.Camera;
+                var displayCanvas = activeDisplay.DisplayObject.GetComponent<Canvas>();
+                displayCanvas.worldCamera = activeDisplay.Camera;
+
+                if (_gameManager != null)
+                {
+                    activeDisplay.TrackViewObject = Instantiate(_trackViewCanvas, transform);
+                    var trackViewCanvas = activeDisplay.TrackViewObject.GetComponent<Canvas>();
+                    trackViewCanvas.worldCamera = activeDisplay.Camera;
+                }
 
                 _activeDisplays[displayNumber] = activeDisplay;
             }
