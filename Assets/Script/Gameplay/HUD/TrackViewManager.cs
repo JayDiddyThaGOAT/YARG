@@ -47,7 +47,7 @@ namespace YARG.Gameplay.HUD
             return trackView;
         }
 
-        public void CreateVocalTrackView()
+        public void CreateVocalTrackView(VocalTrack vocalTrack)
         {
             _vocalImage.gameObject.SetActive(true);
 
@@ -56,7 +56,7 @@ namespace YARG.Gameplay.HUD
             float ratio = rect.width / rect.height;
 
             // Apply the vocal track texture
-            var rt = GameManager.VocalTrack.InitializeRenderTexture(ratio);
+            var rt = vocalTrack.InitializeRenderTexture(ratio);
             _vocalImage.texture = rt;
         }
 

@@ -1780,7 +1780,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _replayController: {fileID: 52502577}
   _pauseMenu: {fileID: 383918524}
-  <VocalTrack>k__BackingField: {fileID: 1312797156}
   _debugText: {fileID: 751851646}
   _fiveFretGuitarPrefab: {fileID: 7381119128095886790, guid: 0f7a37c9e4abcad4da73b7603d4b7596,
     type: 3}
@@ -4046,6 +4045,38 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &949017970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949017971}
+  m_Layer: 0
+  m_Name: Vocal Track Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949017971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949017970}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1312797157}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &949848794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4809,6 +4840,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0dfb757e714fe78df8cb113995c2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1312797157 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5801866611232935397, guid: f09d7030713b2e34dbc210e5e014add2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5801866609987599366}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1316571460
 GameObject:
   m_ObjectHideFlags: 0
@@ -6784,6 +6821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 2075200650}
+  _vocalTrack: {fileID: 1312797156}
 --- !u!4 &1997744158
 Transform:
   m_ObjectHideFlags: 0
@@ -7331,12 +7369,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 949017971}
     m_Modifications:
     - target: {fileID: 5801866611232935397, guid: f09d7030713b2e34dbc210e5e014add2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5801866611232935397, guid: f09d7030713b2e34dbc210e5e014add2,
         type: 3}
@@ -7351,7 +7389,7 @@ PrefabInstance:
     - target: {fileID: 5801866611232935397, guid: f09d7030713b2e34dbc210e5e014add2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5801866611232935397, guid: f09d7030713b2e34dbc210e5e014add2,
         type: 3}

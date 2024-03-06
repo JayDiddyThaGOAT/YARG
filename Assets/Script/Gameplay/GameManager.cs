@@ -41,9 +41,6 @@ namespace YARG.Gameplay
         [SerializeField]
         private PauseMenuManager _pauseMenu;
 
-        [field: SerializeField]
-        public VocalTrack VocalTrack { get; private set; }
-
         [SerializeField]
         private TextMeshProUGUI _debugText;
 
@@ -135,16 +132,14 @@ namespace YARG.Gameplay
             Navigator.Instance.PopAllSchemes();
             GameStateFetcher.SetSongEntry(Song);
 
-            if (Song is null)
+            if (Song is not null)
             {
-                Debug.LogError("Null song set when loading gameplay!");
-
-                GlobalVariables.Instance.LoadScene(SceneIndex.Menu);
                 return;
             }
 
-            // Hide vocals track (will be shown when players are initialized
-            VocalTrack.gameObject.SetActive(false);
+            Debug.LogError("Null song set when loading gameplay!");
+
+            GlobalVariables.Instance.LoadScene(SceneIndex.Menu);
         }
 
         private void OnDestroy()

@@ -23,7 +23,7 @@ namespace YARG.Gameplay.Visuals
         {
             // Get and show the correct mesh (solo vs harmony)
             MeshRenderer mesh;
-            if (GameManager.VocalTrack.HarmonyShowing)
+            if (VocalTrack.HarmonyShowing)
             {
                 mesh = _harmonyTalkie;
                 _harmonyTalkie.gameObject.SetActive(true);

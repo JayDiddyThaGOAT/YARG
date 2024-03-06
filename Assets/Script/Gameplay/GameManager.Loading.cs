@@ -333,6 +333,7 @@ namespace YARG.Gameplay
 
                 var trackViewManager = MultiDisplayManager.Instance.GetTrackViewManager(player.DisplayNumber);
                 var lyricBar = MultiDisplayManager.Instance.GetLyricBar(player.DisplayNumber);
+                var vocalTrack = MultiDisplayManager.Instance.GetVocalTrack(player.DisplayNumber);
 
                 if (player.Profile.GameMode != GameMode.Vocals)
                 {
@@ -363,24 +364,23 @@ namespace YARG.Gameplay
                 else
                 {
                     // Initialize the vocal track if it hasn't been already, and hide lyric bar
-                    if (!vocalTrackInitialized)
+                    if (!vocalTrack.isActiveAndEnabled)
                     {
-                        VocalTrack.gameObject.SetActive(true);
-                        trackViewManager.CreateVocalTrackView();
+                        vocalTrack.gameObject.SetActive(true);
+                        trackViewManager.CreateVocalTrackView(vocalTrack);
 
                         // Since all players have to select the same vocals
                         // type (solo/harmony) this works no problem.
                         var chart = player.Profile.CurrentInstrument == Instrument.Vocals
                             ? Chart.Vocals
                             : Chart.Harmony;
-                        VocalTrack.Initialize(chart, player);
+                        vocalTrack.Initialize(chart, player);
 
                         lyricBar.SetActive(false);
-                        vocalTrackInitialized = true;
                     }
 
                     // Create the player on the vocal track
-                    var vocalsPlayer = VocalTrack.CreatePlayer();
+                    var vocalsPlayer = vocalTrack.CreatePlayer();
                     var playerHud = trackViewManager.CreateVocalsPlayerHUD();
                     vocalsPlayer.Initialize(index, player, Chart, playerHud);
                     _players.Add(vocalsPlayer);

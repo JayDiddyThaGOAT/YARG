@@ -3,6 +3,8 @@ using UnityEngine;
 using YARG.Core.Chart;
 using YARG.Core.Input;
 using YARG.Gameplay.HUD;
+using YARG.Gameplay.Player;
+using YARG.Helpers.MultiDisplay;
 using YARG.Menu.Navigation;
 
 namespace YARG.Gameplay
@@ -138,8 +140,9 @@ namespace YARG.Gameplay
             foreach (var player in GameManager.Players)
             {
                 player.SetPracticeSection(tickStart, tickEnd);
+                var vocalTrack = MultiDisplayManager.Instance.GetVocalTrack(player.Player.DisplayNumber);
+                vocalTrack.SetPracticeSection(tickStart, tickEnd);
             }
-            GameManager.VocalTrack.SetPracticeSection(tickStart, tickEnd);
 
             GameManager.SetSongTime(timeStart);
 
@@ -209,8 +212,9 @@ namespace YARG.Gameplay
             foreach (var player in GameManager.Players)
             {
                 player.ResetPracticeSection();
+                var vocalTrack = MultiDisplayManager.Instance.GetVocalTrack(player.Player.DisplayNumber);
+                vocalTrack.ResetPracticeSection();
             }
-            GameManager.VocalTrack.ResetPracticeSection();
 
             GameManager.SetSongTime(TimeStart);
             GameManager.Resume(inputCompensation: false);

@@ -12,6 +12,7 @@ using YARG.Core.Game;
 using YARG.Core.Input;
 using YARG.Gameplay.HUD;
 using YARG.Helpers;
+using YARG.Helpers.MultiDisplay;
 using YARG.Input;
 using YARG.Player;
 
@@ -32,7 +33,7 @@ namespace YARG.Gameplay.Player
         private ParticleGroup _hittingParticleGroup;
 
         public override bool ShouldUpdateInputsOnResume => false;
-        
+
         public override float[] StarMultiplierThresholds { get; protected set; } =
         {
             0.21f, 0.46f, 0.77f, 1.85f, 3.08f, 4.18f
@@ -48,6 +49,8 @@ namespace YARG.Gameplay.Player
         private VocalNote _lastTargetNote;
 
         private VocalsPlayerHUD _hud;
+
+        private VocalTrack _vocalTrack;
 
         public void Initialize(int index, YargPlayer player, SongChart chart, VocalsPlayerHUD hud)
         {
@@ -79,6 +82,8 @@ namespace YARG.Gameplay.Player
             Engine = CreateEngine();
 
             StarScoreThresholds = PopulateStarScoreThresholds(StarMultiplierThresholds, Engine.BaseScore);
+
+            _vocalTrack = MultiDisplayManager.Instance.GetVocalTrack(player.DisplayNumber);
         }
 
         protected override void FinishDestruction()
@@ -260,7 +265,7 @@ namespace YARG.Gameplay.Player
                     }
 
                     // Transform!
-                    float z = GameManager.VocalTrack.GetPosForPitch(pitch);
+                    float z = _vocalTrack.GetPosForPitch(pitch);
                     var lerp = Mathf.Lerp(transformCache.localPosition.z, z, Time.deltaTime * lerpRate);
                     transformCache.localPosition = new Vector3(0f, 0f, lerp);
                     _needleTransform.rotation = Quaternion.Lerp(_needleTransform.rotation,
@@ -292,7 +297,7 @@ namespace YARG.Gameplay.Player
                     }
 
                     // Set the position of the needle
-                    var z = GameManager.VocalTrack.GetPosForPitch(pitch);
+                    var z = _vocalTrack.GetPosForPitch(pitch);
                     var lerp = Mathf.Lerp(transformCache.localPosition.z, z, Time.deltaTime * lerpRate);
                     transformCache.localPosition = new Vector3(0f, 0f, lerp);
 

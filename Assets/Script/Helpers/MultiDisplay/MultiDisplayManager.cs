@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using YARG.Gameplay;
 using YARG.Gameplay.HUD;
+using YARG.Gameplay.Player;
 using YARG.Player;
 
 namespace YARG.Helpers.MultiDisplay
@@ -13,6 +14,7 @@ namespace YARG.Helpers.MultiDisplay
     {
         public GameObject DisplayObject;
         public GameObject TrackViewObject;
+        public VocalTrack VocalTrackObject;
         public Camera Camera;
     }
 
@@ -23,6 +25,9 @@ namespace YARG.Helpers.MultiDisplay
 
         [SerializeField]
         private Camera _mainCamera;
+
+        [SerializeField]
+        private VocalTrack _vocalTrack;
 
         public int DisplayCount { get; private set; }
 
@@ -104,6 +109,21 @@ namespace YARG.Helpers.MultiDisplay
             return lyricBar.gameObject;
         }
 
+        public VocalTrack GetVocalTrack(int displayNumber)
+        {
+            VocalTrack vocalTrack;
+            if (!_activeDisplays.ContainsKey(displayNumber))
+            {
+                vocalTrack = _vocalTrack;
+            }
+            else
+            {
+                vocalTrack = _activeDisplays[displayNumber].VocalTrackObject;
+            }
+
+            return vocalTrack;
+        }
+
         public void ConnectPlayerToDisplay(YargPlayer player)
         {
 #if !UNITY_EDITOR
@@ -168,6 +188,9 @@ namespace YARG.Helpers.MultiDisplay
                     activeDisplay.TrackViewObject = Instantiate(_trackViewCanvas, transform);
                     var trackViewCanvas = activeDisplay.TrackViewObject.GetComponent<Canvas>();
                     trackViewCanvas.worldCamera = activeDisplay.Camera;
+
+                    activeDisplay.VocalTrackObject = Instantiate(_vocalTrack, _vocalTrack.transform.parent);
+                    activeDisplay.VocalTrackObject.gameObject.SetActive(false);
                 }
 
                 _activeDisplays[displayNumber] = activeDisplay;
