@@ -191,6 +191,11 @@ namespace YARG.Helpers.MultiDisplay
 
                     activeDisplay.VocalTrackObject = Instantiate(_vocalTrack, _vocalTrack.transform.parent);
                     activeDisplay.VocalTrackObject.gameObject.SetActive(false);
+
+                    var vocalTrackTransform = activeDisplay.VocalTrackObject.transform;
+                    var vocalTrackPosition = vocalTrackTransform.position;
+                    vocalTrackPosition.y += (displayNumber - 1) * 10;
+                    vocalTrackTransform.position = vocalTrackPosition;
                 }
 
                 _activeDisplays[displayNumber] = activeDisplay;

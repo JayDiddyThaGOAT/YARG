@@ -98,6 +98,12 @@ namespace YARG.Gameplay.Player
             // For each harmony...
             for (int i = 0; i < _vocalsTrack.Parts.Count; i++)
             {
+                // If any of the vocal players for this track have the current harmony index...
+                if (_vocalPlayers.All(player => player.Player.Profile.HarmonyIndex != i))
+                {
+                    continue;
+                }
+
                 // Spawn in notes and lyrics
                 SpawnNotesInPhrase(_noteTrackers[i], i);
                 SpawnLyricsInPhrase(_lyricTrackers[i], i);
