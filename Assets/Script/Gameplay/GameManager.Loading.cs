@@ -304,8 +304,6 @@ namespace YARG.Gameplay
         {
             _players = new List<BasePlayer>();
 
-            bool vocalTrackInitialized = false;
-
             int index = -1;
             foreach (var player in YargPlayers)
             {
