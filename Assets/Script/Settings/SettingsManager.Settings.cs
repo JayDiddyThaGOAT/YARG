@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 using YARG.Audio;
 using YARG.Core.Audio;
@@ -29,6 +30,11 @@ namespace YARG.Settings
             /// Have the settings been initialized?
             /// </summary>
             public static bool IsInitialized = false;
+
+            // Prefabs needed for this tab type
+            private static readonly RenderTexture _multiDisplayRenderTexture = Addressables
+                .LoadAssetAsync<RenderTexture>("MultiDisplayRenderTexture")
+                .WaitForCompletion();
 
             #region Hidden Settings
 
@@ -351,6 +357,11 @@ namespace YARG.Settings
                 }
 
                 Screen.SetResolution(resolution.width, resolution.height, fullscreenMode, resolution.refreshRate);
+
+               _multiDisplayRenderTexture.Release();
+               _multiDisplayRenderTexture.width = resolution.width;
+               _multiDisplayRenderTexture.height = resolution.height;
+               _multiDisplayRenderTexture.Create();
 
                 // Make sure to refresh the preview since it'll look stretched if we don't
                 SettingsMenu.Instance.RefreshPreview(true);
