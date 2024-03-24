@@ -43,9 +43,6 @@ namespace YARG.Menu
             // Convert to dictionary with "Menu" as key
             var children = GetComponentsInChildren<MenuObject>(true);
             _menus = children.ToDictionary(i => i.Menu, i => i);
-
-            var canvases = GetComponentsInChildren<Canvas>(true).ToList();
-            canvases.ForEach(canvas => canvas.worldCamera = GlobalVariables.Instance.RenderCamera);
         }
 
         private void Start()
