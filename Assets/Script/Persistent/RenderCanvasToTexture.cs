@@ -8,7 +8,11 @@ namespace YARG
         private void Awake()
         {
             var canvases = GetComponentsInChildren<Canvas>(true).ToList();
-            canvases.ForEach(canvas => canvas.worldCamera = GlobalVariables.Instance.RenderCamera);
+            foreach (var canvas in canvases)
+            {
+                canvas.worldCamera = GlobalVariables.Instance.RenderCamera;
+                canvas.planeDistance = 1f;
+            }
         }
     }
 }
