@@ -48,6 +48,8 @@ namespace YARG
 
         public SceneIndex CurrentScene { get; private set; } = SceneIndex.Persistent;
 
+        public Camera RenderCamera  { get; private set; }
+
         protected override void SingletonAwake()
         {
             YargLogger.LogFormatInfo("YARG {0}", CURRENT_VERSION);
@@ -91,6 +93,8 @@ namespace YARG
             // Set alpha fading (on the tracks) to on
             // (this is mostly for the editor, but just in case)
             Shader.SetGlobalFloat("_IsFading", 1f);
+
+            RenderCamera = GetComponent<Camera>();
         }
 
         private void Start()
