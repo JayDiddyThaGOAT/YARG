@@ -33,6 +33,9 @@ namespace YARG.Gameplay
         // End time cannot be negative; a negative value means it is not set.
         private double _videoEndTime;
 
+        private RenderTexture _backgroundTexture;
+        private RenderTextureDescriptor _backgroundDescriptor;
+
         // "The Unity message 'Start' has an incorrect signature."
         [SuppressMessage("Type Safety", "UNT0006", Justification = "UniTaskVoid is a compatible return type.")]
         private async UniTaskVoid Start()
@@ -78,7 +81,30 @@ namespace YARG.Gameplay
 
                     var bgInstance = Instantiate(bg);
 
-                    bgInstance.GetComponent<BundleBackgroundManager>().Bundle = bundle;
+                    var bbManager = bgInstance.GetComponent<BundleBackgroundManager>();
+                    bbManager.Bundle = bundle;
+
+                    // Create render texture for yargground
+                    _backgroundDescriptor = new RenderTextureDescriptor(
+                        Screen.width, Screen.height,
+                        RenderTextureFormat.ARGBHalf
+                    );
+                    _backgroundDescriptor.mipCount = 0;
+                    _backgroundTexture = new RenderTexture(_backgroundDescriptor);
+
+                    // Hack for venues with multiple cameras to just send it's output to BackgroundTexture
+                    // so no camera will go over canvas.
+                    foreach (var camera in bbManager.GetComponentsInChildren<Camera>())
+                    {
+                        camera.targetTexture = _backgroundTexture;
+
+                        // Make sure camera's background color is not transparent
+                        var backgroundColor = camera.backgroundColor;
+                        camera.backgroundColor = new Color(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1.0f);
+                    }
+
+                    _backgroundImage.color = Color.white;
+                    _backgroundImage.texture = _backgroundTexture;
                     break;
                 case BackgroundType.Video:
                     switch (stream)
@@ -112,7 +138,7 @@ namespace YARG.Gameplay
                     var texture = new Texture2D(2, 2);
                     if (texture.LoadImage(stream.ReadBytes((int)stream.Length)))
                     {
-                        _backgroundImage.gameObject.SetActive(true);
+                        _backgroundImage.color = Color.white;
                         _backgroundImage.texture = texture;
                     }
                     break;
@@ -141,6 +167,18 @@ namespace YARG.Gameplay
 
                 _videoStarted = true;
                 _videoPlayer.Play();
+
+                // Create render texture for video
+                _backgroundDescriptor = new RenderTextureDescriptor(
+                    Screen.width, Screen.height,
+                    RenderTextureFormat.ARGBHalf
+                );
+                _backgroundDescriptor.mipCount = 0;
+                _backgroundTexture = new RenderTexture(_backgroundDescriptor);
+
+                _videoPlayer.targetTexture = _backgroundTexture;
+                _backgroundImage.color = Color.white;
+                _backgroundImage.texture = _backgroundTexture;
 
                 // Disable after starting the video if it's not from the song folder
                 // or if video end time is not specified
@@ -287,6 +325,12 @@ namespace YARG.Gameplay
             {
                 File.Delete(VIDEO_PATH);
                 VIDEO_PATH = null;
+            }
+
+            if (_backgroundTexture != null)
+            {
+                _backgroundTexture.Release();
+                _backgroundTexture = null;
             }
         }
 
